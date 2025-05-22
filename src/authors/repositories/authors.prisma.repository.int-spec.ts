@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client"
 import { execSync } from "node:child_process"
 import { NotFoundError } from "@/shared/errors/not-found.error"
 import { AuthorDataBuilder } from "../helpers/author-data-builder"
+import { time } from "node:console"
 
 describe('AuthorsPrismaRepository Integration Tests', () => {
     let module: TestingModule
@@ -48,6 +49,35 @@ describe('AuthorsPrismaRepository Integration Tests', () => {
         const author = await repository.create(data)
 
         expect(author).toMatchObject(data)
+    })
+
+    describe('search methos', () => {
+
+        test('should only apply pagination when the params are null', async () => {
+            const createdAt = new Date()
+            const data = []
+            const arrange = Array(16).fill(AuthorDataBuilder({}))
+
+            arrange.forEach((element, index) => {
+                const timestamp = createdAt.getTime() + index
+                data.push({
+                    ...element,
+                    email: `author${index}@gmail.com`,
+                    createdAt: new Date(timestamp),
+                })
+            })
+
+            await prisma.author.createMany( { data } )
+
+            const result = await repository.search({})
+
+            expect(result.total).toBe(16)
+            expect(result.items.length).toBe(15)
+            result.items.forEach((item) => {
+                expect(item.id).toBeDefined()
+            })
+        })
+
     })
 
 })
