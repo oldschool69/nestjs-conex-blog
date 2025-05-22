@@ -6,7 +6,7 @@ type Author {
   id: ID!
   name: String!
   email: String!
-  createAt: DateTime!
+  createdAt: DateTime!
 }
 
 """

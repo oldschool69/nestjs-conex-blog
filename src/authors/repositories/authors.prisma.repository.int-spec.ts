@@ -3,6 +3,7 @@ import { AuthorsPrismaRepository } from "./authors.prisma.repository"
 import { PrismaClient } from "@prisma/client"
 import { execSync } from "node:child_process"
 import { NotFoundError } from "@/shared/errors/not-found.error"
+import { AuthorDataBuilder } from "../helpers/author-data-builder"
 
 describe('AuthorsPrismaRepository Integration Tests', () => {
     let module: TestingModule
@@ -31,10 +32,7 @@ describe('AuthorsPrismaRepository Integration Tests', () => {
     })
 
     test('should find an athor by id', async () => {
-        const data = {
-            name: 'Flavio Oliveira',
-            email: 'flavio@gmail.com'
-        }
+        const data = AuthorDataBuilder({})
 
         const author = await prisma.author.create({
             data,

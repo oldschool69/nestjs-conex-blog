@@ -12,5 +12,5 @@ export class Author {
     email: string
 
     @Field()
-    createAt: Date
+    createdAt: Date
 }
