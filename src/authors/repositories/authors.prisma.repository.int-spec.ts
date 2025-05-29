@@ -91,13 +91,12 @@ describe('AuthorsPrismaRepository Integration Tests', () => {
     })
 
     test('should return null when does not find an author with the email provided', async () => {
-        const result =  await repository.findByEmail('a@a.com')
+        const result = await repository.findByEmail('a@a.com')
         expect(result).toBeNull()
     })
 
-
     test('should return an author from email search', async () => {
-        const data = AuthorDataBuilder({ email: 'a@a.com'})
+        const data = AuthorDataBuilder({ email: 'a@a.com' })
 
         const author = await prisma.author.create({ data })
 
@@ -105,7 +104,6 @@ describe('AuthorsPrismaRepository Integration Tests', () => {
 
         expect(result).toMatchObject(author)
     })
-
 
     describe('search method', () => {
         test('should only apply pagination when the params are null', async () => {
@@ -145,7 +143,7 @@ describe('AuthorsPrismaRepository Integration Tests', () => {
             arrange.split('').forEach((element, index) => {
                 const timestamp = createdAt.getTime() + index
                 data.push({
-                    ...AuthorDataBuilder({ name: element}),
+                    ...AuthorDataBuilder({ name: element }),
                     email: `author${index}@gmail.com`,
                     createdAt: new Date(timestamp),
                 })
@@ -172,7 +170,6 @@ describe('AuthorsPrismaRepository Integration Tests', () => {
 
             expect(result2.items[0]).toMatchObject(data[4])
             expect(result2.items[1]).toMatchObject(data[2])
-
         })
 
         test('should apply pagination.filter and ordering', async () => {
@@ -183,7 +180,7 @@ describe('AuthorsPrismaRepository Integration Tests', () => {
             arrange.forEach((element, index) => {
                 const timestamp = createdAt.getTime() + index
                 data.push({
-                    ...AuthorDataBuilder({ name: element}),
+                    ...AuthorDataBuilder({ name: element }),
                     email: `author${index}@gmail.com`,
                     createdAt: new Date(timestamp),
                 })
@@ -196,7 +193,7 @@ describe('AuthorsPrismaRepository Integration Tests', () => {
                 perPage: 2,
                 sort: 'name',
                 sortDir: 'asc',
-                filter: 'TEST'
+                filter: 'TEST',
             })
 
             expect(result1.items[0]).toMatchObject(data[0])
@@ -207,12 +204,11 @@ describe('AuthorsPrismaRepository Integration Tests', () => {
                 perPage: 2,
                 sort: 'name',
                 sortDir: 'asc',
-                filter: 'TEST'
+                filter: 'TEST',
             })
 
             expect(result2.items[0]).toMatchObject(data[2])
             expect(result2.items.length).toBe(1)
         })
-
     })
 })
