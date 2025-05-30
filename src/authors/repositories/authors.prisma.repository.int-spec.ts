@@ -172,7 +172,7 @@ describe('AuthorsPrismaRepository Integration Tests', () => {
             expect(result2.items[1]).toMatchObject(data[2])
         })
 
-        test('should apply pagination.filter and ordering', async () => {
+        test('should apply pagination, filter and ordering', async () => {
             const createdAt = new Date()
             const data = []
             const arrange = ['test', 'a', 'TEST', 'b', 'Test']

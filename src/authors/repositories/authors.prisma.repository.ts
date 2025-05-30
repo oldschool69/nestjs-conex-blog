@@ -25,8 +25,8 @@ export class AuthorsPrismaRepository implements IAuthorsRepository {
         const updatedAuthor = await this.prisma.author.update({
             data: author,
             where: {
-                id: author.id
-            }
+                id: author.id,
+            },
         })
         return author
     }
@@ -34,7 +34,7 @@ export class AuthorsPrismaRepository implements IAuthorsRepository {
     async delete(id: string): Promise<Author> {
         const author = await this.get(id)
         await this.prisma.author.delete({
-            where: { id }
+            where: { id },
         })
         return author
     }
@@ -45,7 +45,7 @@ export class AuthorsPrismaRepository implements IAuthorsRepository {
 
     async findByEmail(email: string): Promise<Author> {
         return this.prisma.author.findUnique({
-            where: { email }
+            where: { email },
         })
     }
 
@@ -76,20 +76,18 @@ export class AuthorsPrismaRepository implements IAuthorsRepository {
                 },
             }),
             orderBy: {
-                [orderByField]: orderByDir
+                [orderByField]: orderByDir,
             },
             skip: page > 0 ? (page - 1) * perPage : 1,
             take: perPage > 0 ? perPage : 15,
         })
-
-
 
         return {
             items: authors,
             currentPage: page,
             perPage,
             lastPage: Math.ceil(count / perPage),
-            total: count
+            total: count,
         }
     }
 
