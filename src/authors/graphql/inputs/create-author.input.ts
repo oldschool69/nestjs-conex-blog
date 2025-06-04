@@ -1,3 +1,4 @@
+import { tr } from '@faker-js/faker'
 import { Field, InputType } from '@nestjs/graphql'
 
 @InputType()
