@@ -1,6 +1,6 @@
 import { Post } from '../graphql/models/post'
 
-export interface PostRepository {
+export interface PostsRepository {
     create(data: Omit<Post, 'id'>): Promise<Post>
     update(post: Post): Promise<Post>
     findById(id: string): Promise<Post>
