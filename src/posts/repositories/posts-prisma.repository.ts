@@ -25,8 +25,11 @@ export class PostsPrismaRepository implements PostsRepository {
         return await this.get(id)
     }
 
-    findBySlug(slug: string): Promise<Post> {
-        throw new Error('Method not implemented.')
+    async findBySlug(slug: string): Promise<Post> {
+        const post = await this.prismaService.post.findUnique({
+            where: { slug },
+        })
+        return post
     }
 
     async get(id: string): Promise<Post> {
