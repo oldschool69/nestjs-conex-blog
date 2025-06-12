@@ -8,6 +8,7 @@ import { GetPostUseCase } from './usecases/get-post.usecase'
 import { PublishPostUseCase } from './usecases/publish-post.usecase'
 import { UnpublishPostUseCase } from './usecases/unpublish-post.usecase'
 import { PostsResovler } from './resolvers/post.resolver'
+import { GetAuthorUsecase } from '@/authors/usercases/get-author.usecase'
 
 @Module({
     imports: [DatabaseModule],
@@ -64,6 +65,13 @@ import { PostsResovler } from './resolvers/post.resolver'
                 return new UnpublishPostUseCase.UseCase(postsRepository)
             },
             inject: ['PostsRepository'],
+        },
+        {
+            provide: GetAuthorUsecase.Usecase,
+            useFactory: (authorRepository: AuthorsPrismaRepository) => {
+                return new GetAuthorUsecase.Usecase(authorRepository)
+            },
+            inject: ['AuthorsRepository'],
         },
     ],
 })
